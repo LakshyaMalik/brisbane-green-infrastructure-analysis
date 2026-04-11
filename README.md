@@ -1,51 +1,55 @@
 
 
-# Brisbane Green Infrastructure Analysis
+# Brisbane Temperature and Heat Analysis
 
 ## Overview
 
-This project investigates how green infrastructure influences environmental conditions in Brisbane. Specifically, it examines the relationship between tree cover and park density with air pollution and urban heat across suburbs.
+This project investigates temperature patterns and extreme heat conditions across Brisbane suburbs using climate data from the SILO database.
 
-The aim is to provide data-driven insights into how urban planning decisions impact environmental health.
+The focus is on understanding how temperature varies spatially across suburbs and how extreme heat events have changed over time. In addition to statistical analysis, machine learning methods are applied to uncover patterns and support findings.
 
+The aim is to provide data-driven insights into urban temperature behaviour and potential increases in heat-related risk.
 
+---
 
 ## Research Questions
 
-### Primary Question
+### Question 1
 
-What is the relationship between green infrastructure (tree cover and park density) and:
+How does temperature vary across Brisbane suburbs?
 
-* air pollution levels
-* urban heat
+### Question 2
 
-### Statistical Significance
+How has the frequency of dangerous heat days changed over time?
 
-Is this relationship statistically significant after controlling for population and traffic density?
+A dangerous heat day is defined as a day with both high maximum temperature and high solar radiation.
 
-### Sustainability Analysis
-
-Which Brisbane suburbs have maintained or improved air quality over time despite population growth, and how does this relate to changes in green coverage?
-
+---
 
 ## Data Sources
 
-* **Brisbane City Council (BCC)** — 
- [Park location data](https://data.brisbane.qld.gov.au/explore/dataset/park-locations/information/?disjunctive.suburb&disjunctive.park_size&sort=objectid&location=13,-27.49655,153.0102&basemap=jawg.streets)
-* **DESI** — [Air quality measurements](https://apps.des.qld.gov.au/air-quality/download/)
-* **SILO Climate Data** — [Temperature data](https://www.longpaddock.qld.gov.au/silo/gridded-data/)
-* **SLATS** — [Tree cover and land use changes](https://www.data.qld.gov.au/dataset/statewide-landcover-and-trees-study-queensland-sentinel-2-series)
+* **SILO Climate Data** —
+  [Climate data API](https://www.longpaddock.qld.gov.au/silo/)
+  Used to extract daily climate variables (2016–2026) for each suburb using latitude and longitude coordinates.
+---
+
+## Methodology
+
 
 ---
 
 
+### Statistical Analysis
+
+
+---
+
 ## Repository Structure
 
 ```
-brisbane-green-infrastructure-analysis/
+brisbane-temperature-analysis/
 │
 ├── dataset/
-│
 │
 ├── src/
 │   ├── example.py
@@ -56,5 +60,4 @@ brisbane-green-infrastructure-analysis/
 └── README.md
 ```
 
-## Authors
-
+---
