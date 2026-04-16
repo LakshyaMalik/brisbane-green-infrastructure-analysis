@@ -2,9 +2,11 @@
 
 # datasets
 /dataset
+/src/q1/suburb-silo-data.csv
 
 # Other local dependencies
 
-
+/src/q1/q1_Jupyter.pdf
+src/q1/.ipynb_checkpoints/
 
 
