@@ -1,14 +1,219 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[margin=2.5cm]{geometry}
 
-\title{brisbane-green-infrastructure-analysis}
-\author{Jevi Waugh}
+\title{How Does Temperature Vary Across Brisbane Suburbs?\\
+       \large DATA7001 Group Project — Q1 Analysis}
+\author{Angga Septananda, Lakshya Malik, Oscar Boidanich Silvera \\
+        Panthira Rujanavech, Jevi Waugh}
 \date{March 2026}
 
 \begin{document}
 
 \maketitle
 
+% ─────────────────────────────────────────────
+\begin{abstract}
+% TODO: Write last, once all sections are complete.
+% Summarise: research question, dataset, key methods, headline findings (hottest/coolest suburb, spatial gradient, statistical significance of inner vs outer difference).
+\end{abstract}
+
+% ─────────────────────────────────────────────
 \section{Introduction}
+% TODO: Lakshya
+% Cover: why urban temperature variation matters (urban heat island, green infrastructure planning),
+% research question statement, and a brief roadmap of the paper.
+
+% ─────────────────────────────────────────────
+\section{Data and Methodology}
+
+\subsection{Dataset}
+% TODO: Lakshya
+% Describe the SILO dataset: source, spatial coverage (193 Brisbane suburbs),
+% temporal range (2016-01-01 to 2026-01-31), variables available (max_temp, min_temp,
+% daily_rain, vapour pressure, radiation, evapotranspiration, etc.).
+% Cite \cite{SILO}.
+
+\subsection{Data Preparation}
+% TODO: Lakshya
+% Describe steps taken: parsing dates, computing avg_temp = (min_temp + max_temp) / 2,
+% deriving year and month columns, filtering to selected inner-city suburbs.
+
+% ─────────────────────────────────────────────
+\section{Exploratory Analysis}
+\label{sec:exploratory}
+% TODO: Lakshya
+% This section covers your four exploratory plots.
+
+\subsection{Annual Temperature Trends by Suburb}
+% TODO: Lakshya
+% Discuss the multi-suburb line plot (annual avg_temp per suburb, 2016–2026).
+% Key observation: parallel rise-and-fall pattern across suburbs suggesting a shared
+% regional signal; 2022 appears as the coolest year; 2026 spike is a data artefact
+% (only Jan data available, no winter months to pull the average down).
+
+\subsection{Monthly Temperature Trends}
+% TODO: Lakshya
+% Discuss per-suburb monthly breakdown. Note how the seasonal cycle is clearly visible
+% and consistent across suburbs. Refer to the individual suburb monthly plots.
+
+\subsection{Temperature Distribution by Suburb}
+% TODO: Lakshya
+% Discuss the KDE plot for the 15 selected inner-Brisbane suburbs.
+% Note overlapping distributions, slight shifts in modal temperature between suburbs.
+
+\subsection{Correlation Between Climate Variables}
+% TODO: Lakshya
+% Discuss the heatmap. Highlight strongest correlations:
+% e.g. vp\_deficit vs max\_temp, rh\_tmax vs vp\_deficit (negative), radiation vs max\_temp.
+% Note that one-hot encoding suburbs was suggested for future modelling.
+
+% ─────────────────────────────────────────────
+\section{Suburb-Level Temperature Analysis}
+\label{sec:suburb}
+
+\subsection{Hottest and Coolest Suburbs}
+
+Brisbane's 193 suburbs span a measurable range of mean maximum temperatures over the
+2016--2026 period. Figure~\ref{fig:ranking} ranks the ten hottest and ten coolest suburbs
+by their long-run mean daily maximum temperature.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\linewidth]{results/q1/Brisbane Suburb Temperature Ranks.png}
+    \caption{Ten hottest and ten coolest Brisbane suburbs ranked by mean maximum temperature
+             (2016--2026). Firebrick bars indicate the hottest suburbs; steel-blue bars the coolest.}
+    \label{fig:ranking}
+\end{figure}
+
+% TODO: Fill in specific suburb names and temperatures once notebook output is confirmed.
+% Discuss: which suburbs appear at each extreme, and what geographic or land-use factors
+% might explain the gap (e.g. distance from coast, elevation, vegetation cover).
+
+\subsection{Spatial Distribution of Temperature}
+
+Figure~\ref{fig:spatial} maps each suburb as a point coloured by its mean maximum
+temperature, overlaid on the Brisbane coordinate grid. This reveals the geographic
+structure of the temperature gradient across the region.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\linewidth]{results/q1/Spatial Distribution of Mean Max Temp.png}
+    \caption{Spatial distribution of mean maximum temperature across Brisbane suburbs
+             (2016--2026). Colour scale runs from cool (blue) to hot (red); the hottest
+             and coolest suburbs are annotated.}
+    \label{fig:spatial}
+\end{figure}
+
+% TODO: Describe the spatial pattern observed — e.g. western suburbs warmer than coastal/eastern
+% suburbs, consistent with sea-breeze moderation near Moreton Bay. Refer to annotated suburbs.
+
+\subsection{Urban vs Outer Brisbane: Welch's \textit{t}-Test}
+
+To test whether inner-city suburbs experience statistically different temperatures from
+outer suburbs, we divided the dataset into two zones: 15 inner-Brisbane suburbs
+(St Lucia, Brisbane City, Toowong, New Farm, etc.) and all remaining outer suburbs.
+Figure~\ref{fig:boxplot} shows the distribution of daily maximum temperature for each
+zone over the full study period.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{results/q1/Max Temperature-Inner vs Outer Brisbane (2016-2026).png}
+    \caption{Boxplot of daily maximum temperature for inner vs outer Brisbane suburbs
+             (2016--2026).}
+    \label{fig:boxplot}
+\end{figure}
+
+A Welch's two-sample \textit{t}-test (which does not assume equal variances) was applied
+to compare the two groups. The test yielded:
+
+\begin{equation}
+    t = \langle t\text{-stat} \rangle, \quad p = \langle p\text{-value} \rangle
+\end{equation}
+
+% TODO: Insert actual t-stat and p-value from notebook output.
+% Discuss: is the difference statistically significant (p < 0.05)?
+% Quantify the mean difference in °C between zones.
+% Discuss why Welch's (not Student's) t-test was appropriate here (unequal group sizes and
+% potentially unequal variances between 15 inner vs 178 outer suburbs).
+
+\subsection{Temperature Variability by Suburb}
+
+Beyond mean temperatures, the degree of day-to-day variability (measured by the standard
+deviation of daily maximum temperature) differs across suburbs.
+Figure~\ref{fig:variability} contrasts the 20 most variable and 20 most stable suburbs.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\linewidth]{results/q1/Temperature Variability Across Brisbane Suburbs (2016-2026).png}
+    \caption{Temperature variability across Brisbane suburbs (2016--2026), measured by
+             the standard deviation of daily maximum temperature. Left: 20 most variable;
+             right: 20 most stable.}
+    \label{fig:variability}
+\end{figure}
+
+% TODO: Discuss which suburbs are most/least variable and what might explain this
+% (e.g. inland vs coastal, elevation). Note that high variability may indicate
+% greater heat stress risk even if the mean temperature is moderate.
+
+\subsection{Temperature vs Latitude: OLS Regression}
+
+We fit an ordinary least squares (OLS) regression of mean maximum temperature against
+suburb latitude to quantify the north--south temperature gradient across Brisbane.
+Each suburb contributes one observation (its long-run mean max temp and its latitude),
+avoiding pseudoreplication from daily rows.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\linewidth]{results/q1/Mean Max Temperature vs Latitude.png}
+    \caption{OLS regression of mean maximum temperature on latitude across Brisbane
+             suburbs (2016--2026). Each point is one suburb; the firebrick line is the
+             fitted regression.}
+    \label{fig:regression}
+\end{figure}
+
+The fitted model is:
+
+\begin{equation}
+    \widehat{\text{Mean Max Temp}} = \langle\text{slope}\rangle \times \text{Latitude}
+    + \langle\text{intercept}\rangle
+    \quad (R^2 = \langle R^2 \rangle,\ p = \langle p\text{-value} \rangle)
+\end{equation}
+
+% TODO: Insert actual slope, intercept, R², and p-value from notebook output.
+% Discuss: direction of slope (more southerly = more negative latitude = warmer or cooler?),
+% goodness of fit, and whether latitude alone is a strong predictor or other factors dominate.
+
+% ─────────────────────────────────────────────
+\section{Discussion}
+% TODO: Shared — synthesise findings from Sections 3 and 4.
+% Suggested talking points:
+% - Consistent regional signal (all suburbs track together year-to-year) vs local variation
+% - Spatial gradient: west warmer, coast cooler — implications for green infrastructure
+% - Statistical confirmation of inner/outer temperature difference
+% - Limitations: SILO data is interpolated, not station-measured; inner suburb list is
+%   manually defined; 2026 data is incomplete.
+
+% ─────────────────────────────────────────────
+\section{Conclusion}
+% TODO: Shared — 1–2 paragraphs.
+% Restate the research question, summarise the headline answers, and suggest one or two
+% directions for future work (e.g. incorporating land-use data, modelling with suburb
+% one-hot encoding as noted in the correlation section).
+
+% ─────────────────────────────────────────────
+\begin{thebibliography}{9}
+
+\bibitem{SILO}
+Queensland Government,
+\textit{SILO — Australian Climate Data from 1889 to Yesterday},
+\url{https://www.longpaddock.qld.gov.au/silo/},
+Accessed: April 2026.
+
+\end{thebibliography}
 
 \end{document}
